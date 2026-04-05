@@ -19,7 +19,7 @@ const UserManager = () => {
     setAdding(false);
   };
 
-  const filtered = users.filter(u => {
+  const filtered = users.filter(u => u.role !== 'faculty').filter(u => {
     const matchSearch = u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase());
     const matchRole = filterRole === 'All' || u.role === filterRole;
     return matchSearch && matchRole;
@@ -27,7 +27,6 @@ const UserManager = () => {
 
   const roleColors: Record<string, string> = {
     admin: 'bg-red-50 text-red-700 border-red-200',
-    faculty: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     student: 'bg-blue-50 text-blue-700 border-blue-200',
   };
 
@@ -65,7 +64,6 @@ const UserManager = () => {
               <select value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value as UserRole }))}
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
                 <option value="student">Student</option>
-                <option value="faculty">Faculty</option>
                 <option value="admin">Admin</option>
               </select>
             </div>
@@ -97,7 +95,7 @@ const UserManager = () => {
             className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all" />
         </div>
         <div className="flex gap-2">
-          {['All', 'student', 'faculty', 'admin'].map(r => (
+          {['All', 'student', 'admin'].map(r => (
             <button key={r} onClick={() => setFilterRole(r)}
               className={`px-3 py-2 text-xs font-semibold rounded-lg border transition-colors ${filterRole === r ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'}`}>
               {r === 'All' ? 'All' : r.charAt(0).toUpperCase() + r.slice(1)}

@@ -42,7 +42,7 @@ interface DataContextType {
   achievements: Achievement[];
   internships: Internship[];
 
-  login: (email: string, role: UserRole) => Promise<boolean>;
+  login: (email: string, role: UserRole, password?: string) => Promise<boolean>;
   logout: () => void;
   getVisibleStudents: () => StudentProfile[];
   getAssignedStudents: (facultyId: string) => StudentProfile[];
@@ -231,11 +231,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 
   // ─── Auth ───
-  const login = useCallback(async (email: string, role: UserRole): Promise<boolean> => {
+  const login = useCallback(async (email: string, role: UserRole, password: string = 'password'): Promise<boolean> => {
     try {
       const { token, user } = await api('/auth/login', {
         method: 'POST',
-        body: JSON.stringify({ email, password: 'password', role }),
+        body: JSON.stringify({ email, password, role }),
       });
       localStorage.setItem('corefolio_token', token);
       const mappedUser = mapId(user);

@@ -5,19 +5,16 @@ import { motion } from 'motion/react';
 import { Users, GitBranch, BookOpen, UserCheck, Trophy, BarChart3, ArrowUpRight } from 'lucide-react';
 
 const AdminDashboard = () => {
-  const { students, users, branches, courses, allocations, evaluations, projects, computeRankings } = useData();
+  const { students, users, branches, courses, evaluations, projects, computeRankings } = useData();
 
   const stats = [
     { label: 'Total Students', value: users.filter(u => u.role === 'student').length, icon: Users, gradient: 'from-blue-500 to-indigo-600', shadow: 'shadow-blue-500/20', bg: 'bg-blue-50', color: 'text-blue-600' },
-    { label: 'Faculty Members', value: users.filter(u => u.role === 'faculty').length, icon: UserCheck, gradient: 'from-emerald-500 to-teal-600', shadow: 'shadow-emerald-500/20', bg: 'bg-emerald-50', color: 'text-emerald-600' },
     { label: 'Branches', value: branches.length, icon: GitBranch, gradient: 'from-purple-500 to-violet-600', shadow: 'shadow-purple-500/20', bg: 'bg-purple-50', color: 'text-purple-600' },
-    { label: 'Active Allocations', value: allocations.filter(a => a.active).length, icon: BookOpen, gradient: 'from-amber-500 to-orange-600', shadow: 'shadow-amber-500/20', bg: 'bg-amber-50', color: 'text-amber-600' },
   ];
 
   const quickLinks = [
     { label: 'Manage Branches', to: '/dashboard/admin/branches', icon: GitBranch },
     { label: 'Manage Users', to: '/dashboard/admin/users', icon: Users },
-    { label: 'Student Allocations', to: '/dashboard/admin/allocations', icon: UserCheck },
 
     { label: 'Global Rankings', to: '/dashboard/admin/rankings', icon: Trophy },
   ];

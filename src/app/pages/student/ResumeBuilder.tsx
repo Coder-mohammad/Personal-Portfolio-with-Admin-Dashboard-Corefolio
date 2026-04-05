@@ -22,7 +22,7 @@ const ResumeBuilder = () => {
 
   useEffect(() => {
     if (profile) {
-      setEditingSummary(profile.summary);
+      setEditingSummary(profile.summary || '');
     }
   }, [profile]);
 
@@ -173,15 +173,14 @@ const ResumeBuilder = () => {
             {/* Header */}
             <div className="border-b-2 border-gray-800 pb-4 mb-6">
               <h1 className="text-3xl font-bold uppercase tracking-wider text-gray-900">{profile.name}</h1>
-              <div className="text-lg text-gray-600 font-medium mt-1">{profile.headline}</div>
+              <div className="text-lg text-gray-600 font-medium mt-1">{profile.headline || ''}</div>
               <div className="flex flex-wrap gap-4 mt-3 text-xs text-gray-500">
                 <span>{profile.email}</span>
-                <span>•</span>
-                <span>{profile.location}</span>
-                {profile.socials.linkedin && (
+                {profile.location && <><span>•</span><span>{profile.location}</span></>}
+                {profile.socials?.linkedin && (
                   <>
                     <span>•</span>
-                    <span>{profile.socials.linkedin}</span>
+                    <span>{profile.socials?.linkedin}</span>
                   </>
                 )}
               </div>
@@ -209,7 +208,7 @@ const ResumeBuilder = () => {
                       onChange={(e) => setEditingSummary(e.target.value)}
                     />
                   ) : (
-                    <p className="text-gray-700 text-justify">{profile.summary}</p>
+                    <p className="text-gray-700 text-justify">{profile.summary || <span className="italic text-gray-400">No summary yet. Click Edit Resume to add one.</span>}</p>
                   )}
                 </section>
 

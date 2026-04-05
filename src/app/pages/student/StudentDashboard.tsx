@@ -1,26 +1,22 @@
 import React, { useEffect } from 'react';
 import { useData } from '../../contexts/DataProvider';
-import { Briefcase, FileText, ClipboardList, ExternalLink, Plus, Edit2, Award, Building2, Zap, TrendingUp } from 'lucide-react';
+import { Briefcase, FileText, ExternalLink, Plus, Edit2, Award, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
 
 const StudentDashboard = () => {
   const { currentUser, getStudentData, getPlacementReadiness, computeRankings, studentExpertise } = useData();
-  const { profile, projects, evaluations, achievements, internships } = getStudentData(currentUser?.id || '');
+  const { profile, projects, achievements, internships } = getStudentData(currentUser?.id || '');
 
   useEffect(() => { computeRankings(); }, []);
 
   const readiness = getPlacementReadiness(currentUser?.id || '');
   const myRankings = studentExpertise.filter(e => e.studentId === currentUser?.id);
 
-  const averageScore = evaluations.length > 0
-    ? (evaluations.reduce((acc, curr) => acc + curr.totalScore, 0) / evaluations.length).toFixed(1) : 'N/A';
 
   const statCards = [
     { to: '/dashboard/student/projects', label: 'Projects', value: projects.length, icon: Briefcase, gradient: 'from-blue-500 to-indigo-600', bg: 'bg-blue-50', color: 'text-blue-600' },
     { to: '/dashboard/student/experience', label: 'Experience & Awards', value: achievements.length + internships.length, icon: Award, gradient: 'from-emerald-500 to-teal-600', bg: 'bg-emerald-50', color: 'text-emerald-600' },
-    { to: '/dashboard/student/feedback', label: 'Faculty Score', value: averageScore, icon: ClipboardList, gradient: 'from-amber-500 to-orange-600', bg: 'bg-amber-50', color: 'text-amber-600' },
-
   ];
 
   const readinessBreakdown = [

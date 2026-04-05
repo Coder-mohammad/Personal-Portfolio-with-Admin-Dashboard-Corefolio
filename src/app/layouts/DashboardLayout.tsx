@@ -3,7 +3,7 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router';
 import { useData } from '../contexts/DataProvider';
 import {
   LayoutDashboard, User, Briefcase, LogOut, FileText, Users, Award,
-  ClipboardList, Trophy, Menu, X, GitBranch, UserCheck, BarChart3,
+  Trophy, Menu, X, GitBranch, UserCheck, BarChart3,
   Settings, Zap, GraduationCap, Building2
 } from 'lucide-react';
 import { clsx } from 'clsx';
@@ -23,21 +23,15 @@ const DashboardLayout = () => {
     { path: '/dashboard/student/profile', label: 'My Profile', icon: User },
     { path: '/dashboard/student/projects', label: 'My Projects', icon: Briefcase },
     { path: '/dashboard/student/experience', label: 'Experience & Awards', icon: Award },
-
     { path: '/dashboard/student/resume', label: 'Resume Builder', icon: FileText },
-    { path: '/dashboard/student/feedback', label: 'Faculty Feedback', icon: ClipboardList },
   ];
 
-  const facultyNavItems = [
-    { path: '/dashboard/faculty', label: 'My Students', icon: Users, exact: true },
-    { path: '/dashboard/faculty/leaderboard', label: 'Rankings', icon: Trophy },
-  ];
+  const facultyNavItems: typeof studentNavItems = [];
 
   const adminNavItems = [
     { path: '/dashboard/admin', label: 'Admin Dashboard', icon: LayoutDashboard, exact: true },
     { path: '/dashboard/admin/branches', label: 'Branch Management', icon: Building2 },
     { path: '/dashboard/admin/users', label: 'User Management', icon: UserCheck },
-    { path: '/dashboard/admin/allocations', label: 'Faculty Allocation', icon: Users },
 
     { path: '/dashboard/admin/rankings', label: 'Global Rankings', icon: BarChart3 },
   ];
@@ -48,14 +42,11 @@ const DashboardLayout = () => {
         studentNavItems;
 
   const portalLabel =
-    currentUser?.role === 'admin' ? 'Admin Portal' :
-      currentUser?.role === 'faculty' ? 'Faculty Portal' :
-        'Student Portal';
+    currentUser?.role === 'admin' ? 'Admin Portal' : 'User Portal';
 
   const portalGradient =
     currentUser?.role === 'admin' ? 'from-red-500/20 to-orange-500/20 border-red-400/20 text-red-300' :
-      currentUser?.role === 'faculty' ? 'from-emerald-500/20 to-teal-500/20 border-emerald-400/20 text-emerald-300' :
-        'from-indigo-500/20 to-purple-500/20 border-indigo-400/20 text-indigo-300';
+      'from-indigo-500/20 to-purple-500/20 border-indigo-400/20 text-indigo-300';
 
   return (
     <div className="min-h-screen bg-gray-50 flex font-sans">

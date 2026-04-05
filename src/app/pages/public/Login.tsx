@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useData } from '../../contexts/DataProvider';
-import { useNavigate } from 'react-router';
-import { GraduationCap, Users, Shield, Settings, Eye, EyeOff, User, Lock, Mail } from 'lucide-react';
+import { useNavigate, Link } from 'react-router';
+import { GraduationCap, Settings, Eye, EyeOff, User, Lock, Mail, UserPlus } from 'lucide-react';
 import corefolioLogo from "../../../assets/logo.png";
 
 type RoleOption = {
-  key: 'student' | 'faculty' | 'admin';
+  key: 'student' | 'admin';
   label: string;
   icon: React.ElementType;
   defaultEmail: string;
 };
 
 const ROLES: RoleOption[] = [
-  { key: 'student', label: 'STUDENT', icon: GraduationCap, defaultEmail: 'mohammad@corefolio.com' },
-  { key: 'faculty', label: 'FACULTY', icon: Users, defaultEmail: 'faculty@corefolio.com' },
+  { key: 'student', label: 'USER', icon: GraduationCap, defaultEmail: 'mohammad@corefolio.com' },
   { key: 'admin', label: 'ADMIN', icon: Settings, defaultEmail: 'admin@corefolio.com' },
 ];
 
@@ -30,7 +29,6 @@ const Login = () => {
     if (currentUser) {
       const dashMap: Record<string, string> = {
         student: '/dashboard/student',
-        faculty: '/dashboard/faculty',
         admin: '/dashboard/admin',
       };
       navigate(dashMap[currentUser.role] || '/dashboard/student');
@@ -46,11 +44,10 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const success = await login(email, selectedRole.key);
+      const success = await login(email, selectedRole.key, password);
       if (success) {
         const dashMap: Record<string, string> = {
           student: '/dashboard/student',
-          faculty: '/dashboard/faculty',
           admin: '/dashboard/admin',
         };
         navigate(dashMap[selectedRole.key]);
@@ -161,6 +158,16 @@ const Login = () => {
           <div className="mt-6 bg-gray-50 rounded-xl p-3 border border-gray-100">
             <p className="text-xs text-gray-500 text-center">
               Demo credentials: any email above with password <code className="bg-gray-200 px-1 py-0.5 rounded text-xs font-mono">password</code>
+            </p>
+          </div>
+
+          {/* Register Link */}
+          <div className="mt-5 text-center">
+            <p className="text-sm text-gray-500">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-blue-600 font-semibold hover:text-indigo-700 transition-colors inline-flex items-center gap-1">
+                <UserPlus className="w-3.5 h-3.5" /> Create Account
+              </Link>
             </p>
           </div>
         </div>
